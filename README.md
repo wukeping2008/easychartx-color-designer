@@ -1,180 +1,160 @@
-# EasyChartX 波形配色方案设计器
+# EasyChartX Waveform Color Scheme Designer
 
-## 📖 项目简介
+## 📖 Project Overview
 
-EasyChartX 波形配色方案设计器是一个专为简仪科技 SeeSharp 工具包设计的专业配色工具。本工具专注于为 EasyChartX 控件提供科学、美观、实用的多通道波形配色方案，并能直接输出可集成的代码文件。
+The EasyChartX Waveform Color Scheme Designer is a professional color scheme tool specifically designed for SeeSharp Toolkit by JYTEK. This tool focuses on providing scientific, aesthetic, and practical multi-channel waveform color schemes for EasyChartX controls, with direct code output capabilities for seamless integration.
 
-### 🎯 工具定位
+### 🎯 Tool Positioning
 
-- **专业配色设计**：专注于 EasyChartX 配色方案设计和代码输出
-- **预览功能**：模拟波形仅用于配色效果预览，不处理真实信号数据
-- **数据分工**：真实项目中的波形由采样频率和实际信号数据决定
-- **代码集成**：导出的配色代码可直接集成到您的 EasyChartX 项目中
+- **Professional Color Design**: Specialized in EasyChartX color scheme design and code generation
+- **Preview Functionality**: Simulated waveforms for color scheme preview only, not for real signal processing
+- **Data Separation**: Real project waveforms are determined by sampling frequency and actual signal data
+- **Code Integration**: Exported color codes can be directly integrated into your EasyChartX projects
 
-## ✨ 核心功能
+## ✨ Core Features
 
-### 🏆 标准配色方案
-- **D3 Category10** ⭐：D3.js标准配色，基于色彩科学设计，在Lab色域中具有最佳区分度
-- **Tableau标准**：基于D3 Category10，商业图表广泛使用
-- **D3扩展20色**：D3.js扩展配色，前10色为主色，后10色为对应浅色变体，适合大量数据系列
+### 🏆 Standard Color Schemes
+- **D3 Category10** ⭐: D3.js standard colors, scientifically designed with optimal distinction in Lab color space
+- **Tableau Standard**: Based on D3 Category10, widely used in commercial charts
+- **D3 Extended 20**: D3.js extended palette with 10 main colors + 10 corresponding light variants, suitable for large data series
 
-### 📊 经典配色方案
-- **红蓝经典**：最常用的红蓝配色，适合1-2根线的应用场景
-- **专业深色**：现代专业配色，适合长时间观看
+### 📊 Classic Color Schemes
+- **Red-Blue Classic**: Most commonly used red-blue palette, suitable for 1-2 line applications
+- **Professional Dark**: Modern professional colors, suitable for extended viewing
 
-### 🎨 特殊用途配色
-- **无障碍友好**：考虑色盲用户的友好配色方案
-- **K风格**：高对比度配色，易于区分
-- **T风格**：鲜艳明亮配色，适合暗背景
-- **R风格**：现代化配色方案，平衡专业性和美观性
-- **N风格**：纯色系配色，高饱和度
-- **M风格**：科学计算领域广泛使用的配色
-- **自定义配色**：现代渐变风格，美观且专业
+### 🎨 Special Purpose Colors
+- **Accessibility Friendly**: Color-blind friendly palette
+- **K Style**: High contrast colors, easy to distinguish
+- **T Style**: Bright vivid colors, suitable for dark backgrounds
+- **R Style**: Modern color scheme balancing professionalism and aesthetics
+- **N Style**: Pure color system with high saturation
+- **M Style**: Widely used in scientific computing
+- **Custom Colors**: Modern gradient style, beautiful and professional
 
-### 🔧 高级功能
-- **对比模式**：同时预览两种配色方案的效果对比
-- **色系分组**：按逻辑关系分组配色，同组数据使用同色系的深浅变化
-- **背景自适应**：支持白色、黑色、深灰、自定义背景色
-- **网格线配置**：可调节透明度和颜色的网格线系统
-- **波形参数调节**：支持1-12通道，多种波形类型
+### 🔧 Advanced Features
+- **Comparison Mode**: Side-by-side preview of two different color schemes
+- **Color Grouping**: Logical grouping with same color family variations for grouped data
+- **Background Adaptation**: Support for white, black, dark gray, and custom backgrounds
+- **Grid Configuration**: Adjustable transparency and color grid system
+- **Waveform Parameters**: Support for 1-12 channels with multiple waveform types
 
-### 📤 导出功能
-- **JSON格式**：标准的配色数据格式
-- **CSS格式**：Web应用可直接使用的样式文件
-- **JavaScript格式**：前端项目可直接引用的代码
-- **C#格式**：完整的EasyChartX配置代码，可直接集成
+### 📤 Export Functions
+- **JSON Format**: Standard color data format
+- **CSS Format**: Web-ready stylesheet files
+- **JavaScript Format**: Frontend-ready code modules
+- **C# Format**: Complete EasyChartX configuration code for direct integration
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 基础操作流程
+### Basic Operation Flow
 
-1. **选择配色方案**
-   - 在左侧配色方案区域选择合适的配色
-   - 实时预览波形效果
+1. **Select Color Scheme**
+   - Choose appropriate colors from the left panel
+   - Real-time waveform preview
 
-2. **调整参数**
-   - 设置通道数量（1-12通道）
-   - 选择波形类型（正弦波、方波、三角波、混合）
-   - 调整背景色和网格线
+2. **Adjust Parameters**
+   - Set channel count (1-12 channels)
+   - Choose waveform type (sine, square, triangle, mixed)
+   - Adjust background and grid settings
 
-3. **预览效果**
-   - 查看实时波形动画
-   - 启用对比模式比较不同方案
+3. **Preview Effects**
+   - View real-time waveform animation
+   - Enable comparison mode to compare different schemes
 
-4. **导出代码**
-   - 点击导出按钮
-   - 确认配置信息
-   - 下载对应格式的代码文件
+4. **Export Code**
+   - Click export buttons
+   - Confirm configuration
+   - Download code files in desired format
 
-## 📋 详细操作指南
+## 📋 Detailed Operation Guide
 
-### 🎨 背景配置
+### 🎨 Background Configuration
 
-#### 背景颜色选项
-- **白色**：EasyChartX默认背景，适合大多数应用
-- **黑色**：经典示波器风格，专业感强
-- **深灰**：现代化界面风格，护眼效果好
-- **自定义**：可选择任意颜色作为背景
+#### Background Color Options
+- **White**: EasyChartX default background, suitable for most applications
+- **Black**: Classic oscilloscope style with professional appearance
+- **Dark Gray**: Modern interface style with eye-friendly effects
+- **Custom**: Choose any color as background
 
-#### 网格线设置
-- **显示控制**：可独立控制网格线的显示/隐藏
-- **透明度调节**：10%-100%可调，适应不同视觉需求
-- **颜色模式**：
-  - 自动适配：根据背景色智能选择网格线颜色
-  - 浅色：#cccccc，适合深色背景
-  - 深色：#666666，适合浅色背景
-  - 自定义：可选择任意颜色
+#### Grid Settings
+- **Display Control**: Independent control of grid line visibility
+- **Transparency Adjustment**: 10%-100% adjustable for different visual needs
+- **Color Modes**:
+  - Auto Adapt: Intelligent grid color selection based on background
+  - Light: #cccccc, suitable for dark backgrounds
+  - Dark: #666666, suitable for light backgrounds
+  - Custom: Choose any color
 
-### 📊 波形参数详解
+### 📊 Waveform Parameters
 
-#### 通道数量 vs 线条数量
-- **通道数量**：数据通道数，影响波形垂直布局
-  - 决定波形在垂直方向上的分布和间距
-  - 影响每条波形的垂直空间大小
+#### Channel Count vs Line Count
+- **Channel Count**: Data channels affecting vertical waveform layout
+  - Determines vertical distribution and spacing of waveforms
+  - Affects vertical space allocation for each waveform
   
-- **线条数量**：实际绘制线条数，-1=自动匹配通道数
-  - 可以小于通道数量（部分显示）
-  - 允许在预留布局下只显示部分数据
+- **Line Count**: Actual drawn lines, -1 = auto-match channel count
+  - Can be less than channel count (partial display)
+  - Allows showing partial data with reserved layout
 
-#### 波形类型
-- **正弦波**：标准正弦波形，平滑连续
-- **方波**：标准方波，锐利的高低电平转换
-- **三角波**：标准三角波，线性上升下降
-- **混合波形**：三种标准波形的有序组合
+#### Waveform Types
+- **Sine Wave**: Standard sine wave, smooth and continuous
+- **Square Wave**: Standard square wave with sharp high/low transitions
+- **Triangle Wave**: Standard triangle wave with linear rise/fall
+- **Mixed Waveforms**: Ordered combination of three standard waveforms
 
-### 🎨 色系分组（高级功能）
+### 🎨 Color Grouping (Advanced Feature)
 
-#### 功能原理
-色系分组是将颜色按照色相进行分类，每个色系内包含同一色相的不同明度和饱和度变化。
+#### Functionality
+Color grouping categorizes colors by hue, with each group containing variations of the same hue in different brightness and saturation levels.
 
-#### 参数配置
-- **计算公式**：色系数量 × 每组颜色数 = 总颜色数
-- **配合原则**：总颜色数应 ≥ 通道数量，否则会循环使用
-- **示例**：2色系×3颜色 = 6色，适合6通道以内
+#### Parameter Configuration
+- **Formula**: Group Count × Colors per Group = Total Colors
+- **Principle**: Total colors should ≥ Channel count, otherwise cycling occurs
+- **Example**: 2 groups × 3 colors = 6 colors, suitable for up to 6 channels
 
-#### 应用场景
-- **设备分组**：设备A组(蓝色系) vs 设备B组(橙色系)
-- **质量分级**：合格组(绿色系) vs 不合格组(红色系)
-- **A/B测试**：A组用一个色系，B组用另一个色系
+#### Application Scenarios
+- **Device Grouping**: Device A (blue family) vs Device B (orange family)
+- **Quality Classification**: Pass group (green family) vs Fail group (red family)
+- **A/B Testing**: Group A uses one color family, Group B uses another
 
-#### 配置示例
-```
-标准配置：
-- 色系数量：2（双色系）
-- 每组颜色数：3
-- 总颜色数：2×3 = 6色
-- 效果：蓝色系（深蓝、中蓝、浅蓝）+ 橙色系（深橙、中橙、浅橙）
+### 🔄 Comparison Mode
 
-高密度配置：
-- 色系数量：3（三色系）
-- 每组颜色数：4
-- 总颜色数：3×4 = 12色
-- 效果：蓝色系4色 + 橙色系4色 + 绿色系4色
-```
+#### Functionality
+Comparison mode allows simultaneous preview of two different color schemes for quick comparison and optimal selection.
 
-### 🔄 对比模式
+#### Usage
+1. Check "Comparison Mode" checkbox
+2. Select comparison color scheme
+3. Left panel shows current scheme, right panel shows comparison scheme
+4. Real-time visual difference comparison
 
-#### 功能说明
-对比模式允许同时预览两种不同的配色方案，便于快速比较和选择最佳方案。
+## 📤 Export Function Details
 
-#### 使用方法
-1. 勾选"对比模式"复选框
-2. 选择要对比的配色方案
-3. 左侧显示当前方案，右侧显示对比方案
-4. 实时查看两种方案的视觉差异
+### Export Confirmation
+Each export displays detailed confirmation information:
+- Export format type
+- Current color scheme details
+- Configuration parameters (channels, background, waveform type, etc.)
+- Comparison mode status (if enabled)
+- Color grouping information (if enabled)
+- Specific color value list
 
-#### 应用场景
-- 方案选择：在多个候选方案中做最终决定
-- 效果验证：验证新方案相比现有方案的改进效果
-- 客户演示：向客户展示不同方案的视觉效果
+### Export Formats
 
-## 📤 导出功能详解
-
-### 导出确认机制
-每次导出前都会显示详细的确认信息：
-- 导出格式类型
-- 当前配色方案详情
-- 配置参数（通道数、背景色、波形类型等）
-- 对比模式状态（如果启用）
-- 色系分组信息（如果启用）
-- 具体的颜色值列表
-
-### 导出格式说明
-
-#### JSON格式
+#### JSON Format
 ```json
 {
-  "name": "Tableau标准",
-  "description": "Matplotlib Tableau标准10色，商业图表首选",
+  "name": "Tableau Standard",
+  "description": "Based on D3 Category10, widely used in commercial charts",
   "colors": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"],
   "channelCount": 4,
   "exportDate": "2025-01-05T08:30:00.000Z"
 }
 ```
 
-#### CSS格式
+#### CSS Format
 ```css
-/* EasyChartX Tableau标准 配色方案 */
+/* EasyChartX Tableau Standard Color Scheme */
 :root {
   --channel-1-color: #1f77b4;
   --channel-2-color: #ff7f0e;
@@ -186,9 +166,9 @@ EasyChartX 波形配色方案设计器是一个专为简仪科技 SeeSharp 工�
 .waveform-channel-2 { stroke: var(--channel-2-color); }
 ```
 
-#### JavaScript格式
+#### JavaScript Format
 ```javascript
-// EasyChartX Tableau标准 配色方案
+// EasyChartX Tableau Standard Color Scheme
 const channelColors = [
     "#1f77b4", // Channel 1
     "#ff7f0e", // Channel 2
@@ -196,27 +176,27 @@ const channelColors = [
     "#d62728"  // Channel 4
 ];
 
-// 使用示例:
+// Usage example:
 // chart.setChannelColor(channelIndex, channelColors[channelIndex]);
 ```
 
-#### C#格式
+#### C# Format
 ```csharp
-// EasyChartX Tableau标准 配色方案
+// EasyChartX Tableau Standard Color Scheme
 private void GuiRefresh_Click(object sender, EventArgs e)
 {
-    // 设置图表背景和样式
+    // Set chart background and style
     easyChartX1.BackColor = Color.Black;
     easyChartX1.ChartAreaBackColor = Color.Black;
     
-    // 获取曲线颜色表
+    // Get curve color table
     var colorTable = new Color[4];
     colorTable[0] = Color.FromArgb(31, 119, 180);  // #1f77b4
     colorTable[1] = Color.FromArgb(255, 127, 14);  // #ff7f0e
     colorTable[2] = Color.FromArgb(44, 160, 44);   // #2ca02c
     colorTable[3] = Color.FromArgb(214, 39, 40);   // #d62728
     
-    // 设置曲线颜色
+    // Set curve colors
     int numOfWaveforms = 4;
     easyChartX1.Series.AdaptSeriesCount(numOfWaveforms);
     for (int i = 0; i < numOfWaveforms; i++)
@@ -224,152 +204,163 @@ private void GuiRefresh_Click(object sender, EventArgs e)
         easyChartX1.Series[i].Color = colorTable[i];
     }
     
-    // 绘制波形数据
+    // Plot waveform data
     easyChartX1.Plot(allWaveforms, 0, 1);
 }
 ```
 
-## 🎯 最佳实践
+## 🎯 Best Practices
 
-### 配色方案选择建议
+### Color Scheme Selection Guide
 
-#### 通道数量指导
-- **1-2通道**：红蓝经典、任意标准方案
-- **3-6通道**：Tableau标准、D3标准
-- **7-12通道**：D3扩展20色
-- **大量通道**：启用色系分组功能
+#### Channel Count Guidelines
+- **1-2 channels**: Red-Blue Classic, any standard scheme
+- **3-6 channels**: Tableau Standard, D3 Standard
+- **7-12 channels**: D3 Extended 20
+- **Many channels**: Enable color grouping feature
 
-#### 应用场景匹配
-- **商业报告**：Tableau标准
-- **Web应用**：D3标准
-- **科学计算**：M风格
-- **工业监控**：专业深色、无障碍友好
-- **演示展示**：K风格、T风格
+#### Application Scenario Matching
+- **Business Reports**: Tableau Standard
+- **Web Applications**: D3 Standard
+- **Scientific Computing**: M Style
+- **Industrial Monitoring**: Professional Dark, Accessibility Friendly
+- **Presentations**: K Style, T Style
 
-#### 背景色选择
-- **白色背景**：适合打印、文档、报告
-- **黑色背景**：适合监控室、暗环境使用
-- **深灰背景**：适合长时间观看、现代界面
-- **自定义背景**：匹配企业VI、特殊需求
+#### Background Color Selection
+- **White Background**: Suitable for printing, documents, reports
+- **Black Background**: Suitable for control rooms, dark environments
+- **Dark Gray Background**: Suitable for extended viewing, modern interfaces
+- **Custom Background**: Match corporate VI, special requirements
 
-### 色系分组使用建议
+### Color Grouping Usage Guide
 
-#### 适合场景
-- 多设备监控（按设备分组）
-- 质量分析（按等级分组）
-- A/B测试对比
-- 多阶段流程监控
-- 分类数据展示
+#### Suitable Scenarios
+- Multi-device monitoring (grouped by device)
+- Quality analysis (grouped by grade)
+- A/B testing comparisons
+- Multi-stage process monitoring
+- Categorical data display
 
-#### 不适合场景
-- 完全独立的数据系列
-- 需要最大区分度的场合
-- 简单的1-2通道显示
-- 颜色无逻辑关联的数据
-
-#### 参数配置建议
+#### Configuration Recommendations
 ```
-推荐配置：
-• 确保 色系数量×每组颜色数 ≥ 通道数量
-• 避免过度循环使用导致颜色混淆
-• 根据实际应用场景选择合适的色系数量
+Recommended Settings:
+• Ensure Group Count × Colors per Group ≥ Channel Count
+• Avoid excessive cycling that causes color confusion
+• Choose appropriate group count based on actual application
 
-常用配置：
-• 2色系×3颜色 = 6色（适合6通道以内）
-• 3色系×4颜色 = 12色（适合12通道以内）
-• 4色系×3颜色 = 12色（适合复杂分类）
+Common Configurations:
+• 2 groups × 3 colors = 6 colors (suitable for up to 6 channels)
+• 3 groups × 4 colors = 12 colors (suitable for up to 12 channels)
+• 4 groups × 3 colors = 12 colors (suitable for complex categorization)
 ```
 
-## 🔧 技术规格
+## 🔧 Technical Specifications
 
-### 支持的浏览器
+### Supported Browsers
 - Chrome 80+
 - Firefox 75+
 - Safari 13+
 - Edge 80+
 
-### 性能特性
-- 响应式设计，支持桌面、平板、手机
-- 60fps流畅动画
-- 高分辨率屏幕优化
-- 低CPU占用
+### Performance Features
+- Responsive design supporting desktop, tablet, mobile
+- 60fps smooth animation
+- High-resolution screen optimization
+- Low CPU usage
 
-### 文件格式
-- 输入：无需输入文件
-- 输出：JSON、CSS、JavaScript、C#
-- 编码：UTF-8
+### File Formats
+- Input: No input files required
+- Output: JSON, CSS, JavaScript, C#
+- Encoding: UTF-8
 
-## 🆘 常见问题
+## 🆘 FAQ
 
-### Q: 为什么我的配色在实际项目中看起来不一样？
-A: 本工具提供的是配色方案，实际显示效果会受到以下因素影响：
-- 显示器色彩校准
-- EasyChartX控件的渲染设置
-- 操作系统的色彩管理
-- 实际数据的特征
+### Q: Why do my colors look different in actual projects?
+A: This tool provides color schemes. Actual display effects are influenced by:
+- Monitor color calibration
+- EasyChartX control rendering settings
+- Operating system color management
+- Actual data characteristics
 
-### Q: 色系分组功能什么时候使用？
-A: 当您的数据具有逻辑分组关系时使用，例如：
-- 多个设备的同类参数
-- 不同等级的质量数据
-- 对比实验的分组数据
+### Q: When should I use color grouping?
+A: Use when your data has logical grouping relationships, such as:
+- Multiple devices with similar parameters
+- Different quality grade data
+- Comparative experiment grouped data
 
-### Q: 导出的C#代码如何使用？
-A: 将导出的代码复制到您的WinForms项目中，通常放在按钮点击事件或初始化方法中。代码包含完整的EasyChartX配置，可直接运行。
+### Q: How do I use the exported C# code?
+A: Copy the exported code into your WinForms project, typically in button click events or initialization methods. The code includes complete EasyChartX configuration and can run directly.
 
-### Q: 对比模式下导出的是哪个方案？
-A: 对比模式下导出的始终是当前选中的主方案（左侧显示的方案），不是对比方案。
+### Q: Which scheme is exported in comparison mode?
+A: In comparison mode, the currently selected main scheme (left panel) is always exported, not the comparison scheme.
 
-### Q: 如何选择合适的通道数量？
-A: 通道数量应该等于您实际需要显示的数据系列数量。如果不确定，可以选择稍大的数值，然后通过"线条数量"参数控制实际显示的数量。
+### Q: How do I choose the appropriate channel count?
+A: Channel count should equal the number of data series you need to display. If uncertain, choose a slightly larger value and control actual display through the "Line Count" parameter.
 
-## 📝 更新日志
+## 📝 Changelog
 
-### v1.1 (2025年7月5日)
-**🔬 色彩科学优化更新**
+### v1.1 (July 5, 2025)
+**🔬 Color Science Optimization Update**
 
-#### 核心调整
-- **默认配色方案调整**：将D3 Category10设为默认推荐配色方案，添加⭐标识
-- **配色方案重新排序**：D3 Category10置于标准配色方案首位
-- **Category20颜色优化**：重新排列D3扩展20色，前10色为主色，后10色为对应浅色变体
+#### Core Adjustments
+- **Default Color Scheme**: Set D3 Category10 as default recommended scheme with ⭐ indicator
+- **Scheme Reordering**: Moved D3 Category10 to top of standard color schemes
+- **Category20 Optimization**: Reorganized D3 Extended 20 colors with 10 main + 10 light variants
 
-#### 描述文案优化
-- **D3 Category10**：强调"基于色彩科学设计，在Lab色域中具有最佳区分度"
-- **Tableau标准**：更新为"基于D3 Category10，商业图表广泛使用"
-- **科学性说明**：突出Lab色域距离和色彩区分度的专业特性
+#### Description Enhancements
+- **D3 Category10**: Emphasized "scientifically designed with optimal distinction in Lab color space"
+- **Tableau Standard**: Updated to "Based on D3 Category10, widely used in commercial charts"
+- **Scientific Emphasis**: Highlighted Lab color space distance and color distinction properties
 
-#### UI体验优化
-- **自定义颜色选择器**：优化自定义背景和网格颜色选择器的显示效果
-- **颜色显示改进**：选中的颜色直接在选择器控件内显示，界面更加简洁
-- **样式统一**：颜色选择器采用统一的样式设计，提升视觉效果
+#### UI Experience Improvements
+- **Custom Color Pickers**: Optimized display effects for custom background and grid color selectors
+- **Color Display Enhancement**: Selected colors now display directly in picker controls for cleaner interface
+- **Style Consistency**: Unified color picker styling for improved visual effects
 
-#### 技术改进
-- 优化配色方案选择逻辑，默认使用最科学的配色标准
-- 保持向后兼容性，用户仍可选择熟悉的配色方案
-- 提升工具的专业性和科学性
-- 改进用户界面交互体验
+#### Technical Improvements
+- Optimized color scheme selection logic using most scientific color standards
+- Maintained backward compatibility for familiar color schemes
+- Enhanced tool professionalism and scientific foundation
+- Improved user interface interaction experience
 
-### v1.0 (2025年1月5日)
-**🎉 初始版本发布**
+### v1.0 (January 5, 2025)
+**🎉 Initial Release**
 
-#### 核心功能
-- 11种专业配色方案（标准、经典、特殊用途）
-- 实时波形预览和动画效果
-- 多格式导出（JSON、CSS、JavaScript、C#）
-- 对比模式和色系分组高级功能
+#### Core Features
+- 11 professional color schemes (standard, classic, special purpose)
+- Real-time waveform preview and animation
+- Multi-format export (JSON, CSS, JavaScript, C#)
+- Comparison mode and color grouping advanced features
 
-#### 技术特性
-- 响应式设计，支持多设备
-- 高性能60fps动画
-- 完整的EasyChartX集成代码生成
+#### Technical Features
+- Responsive design supporting multiple devices
+- High-performance 60fps animation
+- Complete EasyChartX integration code generation
 
-## 📞 技术支持
+## 📞 Technical Support
 
-如果您在使用过程中遇到问题或有改进建议，请联系简仪科技技术支持团队。
+If you encounter issues or have suggestions for improvement, please contact the JYTEK SeeSharp Toolkit technical support team.
+
+## 🌐 Language Versions
+
+- **English**: README.md (this file)
+- **中文**: README_CN.md
 
 ---
 
-**版本信息**：v1.1  
-**更新日期**：2025年7月5日  
-**开发团队**：简仪科技 SeeSharp 工具包团队  
-**适用产品**：EasyChartX 控件
+**Version**: v1.1  
+**Update Date**: July 5, 2025  
+**Development Team**: JYTEK SeeSharp Toolkit Team  
+**Compatible Product**: EasyChartX Control
+
+## 📄 License
+
+This project is open source. Please refer to the license file for specific terms.
+
+## 🤝 Contributing
+
+We welcome contributions! Please feel free to submit issues and pull requests.
+
+## ⭐ Star History
+
+If this project helps you, please consider giving it a star!
