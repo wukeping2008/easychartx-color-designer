@@ -1,0 +1,48 @@
+{
+  "testSettings": {
+    "enablePerformanceMonitoring": true,
+    "enableErrorLogging": true,
+    "testDataPath": "Resources/TestData",
+    "maxTestDuration": 30000,
+    "memoryThreshold": 100
+  },
+  "testCases": [
+    {
+      "name": "ColorSchemeLoading",
+      "description": "测试配色方案加载功能",
+      "enabled": true,
+      "timeout": 5000
+    },
+    {
+      "name": "WaveformGeneration",
+      "description": "测试波形生成功能",
+      "enabled": true,
+      "timeout": 10000
+    },
+    {
+      "name": "ExportFunctionality",
+      "description": "测试导出功能",
+      "enabled": true,
+      "timeout": 15000
+    },
+    {
+      "name": "UIResponsiveness",
+      "description": "测试界面响应性",
+      "enabled": true,
+      "timeout": 5000
+    },
+    {
+      "name": "MemoryUsage",
+      "description": "测试内存使用情况",
+      "enabled": true,
+      "timeout": 20000
+    }
+  ],
+  "performanceTargets": {
+    "startupTime": 3000,
+    "colorSchemeSwitch": 500,
+    "waveformUpdate": 100,
+    "exportTime": 5000,
+    "memoryUsage": 50
+  }
+}

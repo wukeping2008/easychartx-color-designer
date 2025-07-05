@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyChartX 波形配色方案设计器 - 简仪科技</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .usage-guide {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .usage-guide h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            color: #ecf0f1;
+        }
+
+        .guide-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .guide-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .guide-step:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .step-number {
+            background: #3498db;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            color: #ecf0f1;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .important-notice {
+            margin-top: 25px;
+            background: rgba(255, 193, 7, 0.15);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .important-notice h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            color: #fff3cd;
+        }
+
+        .notice-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .notice-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .notice-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .notice-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .notice-text {
+            color: #fff3cd;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 800px;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            padding: 30px;
+            border-right: 1px solid #e9ecef;
+        }
+
+        .color-scheme-section {
+            margin-bottom: 30px;
+        }
+
+        .color-scheme-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .scheme-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .scheme-button:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .scheme-button.active {
+            border-color: #3498db;
+            background: #3498db;
+            color: white;
+        }
+
+        .color-preview {
+            display: flex;
+            gap: 3px;
+            margin-top: 5px;
+        }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .scheme-description {
+            font-size: 11px;
+            color: #666;
+            margin: 3px 0;
+            line-height: 1.3;
+            font-style: italic;
+        }
+
+        .scheme-button.active .scheme-description {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .preview-area {
+            padding: 30px;
+            background: white;
+        }
+
+        .chart-container {
+            background: #000000;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+        }
+
+        .chart-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .waveform-canvas {
+            width: 100%;
+            height: 400px;
+            background: #000000;
+            border-radius: 5px;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .control-group h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .control-item {
+            margin-bottom: 15px;
+        }
+
+        .control-item label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .control-item input, .control-item select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .export-section {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #c3e6c3;
+        }
+
+        .export-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .export-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .export-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .color-values {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .comparison-mode {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-chart {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .comparison-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .comparison-canvas {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 5px;
+        }
+
+        .export-info {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+            border-radius: 6px;
+        }
+
+        .export-info h5 {
+            color: #155724;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .export-info p {
+            color: #155724;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .color-group-info {
+            margin: 10px 0;
+            padding: 12px;
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .info-content {
+            margin-bottom: 8px;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .info-example {
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .info-content strong,
+        .info-example strong,
+        .info-params strong {
+            color: #1565c0;
+        }
+
+        .info-params {
+            margin-top: 8px;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>EasyChartX 波形配色方案设计器</h1>
+            <p>为简仪科技SeeSharp工具包设计专业的多通道波形配色方案</p>
+            
+            <div class="important-notice">
+                <h3>💡 工具定位说明</h3>
+                <div class="notice-content">
+                    <div class="notice-item">
+                        <span class="notice-icon">🎨</span>
+                        <span class="notice-text">本工具专注于EasyChartX配色方案设计和代码输出</span>
+                    </div>
+                    <div class="notice-item">
+                        <span class="notice-icon">📊</span>
+                        <span class="notice-text">模拟波形仅用于配色效果预览，不处理真实信号数据</span>
+                    </div>
+                    <div class="notice-item">
+                        <span class="notice-icon">⚡</span>
+                        <span class="notice-text">真实项目中的波形由采样频率和实际信号数据决定</span>
+                    </div>
+                    <div class="notice-item">
+                        <span class="notice-icon">🔧</span>
+                        <span class="notice-text">导出的配色代码可直接集成到您的EasyChartX项目中</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="usage-guide">
+                <h3>📖 使用说明</h3>
+                <div class="guide-content">
+                    <div class="guide-step">
+                        <span class="step-number">1</span>
+                        <span class="step-text">选择左侧配色方案，实时预览波形效果</span>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">2</span>
+                        <span class="step-text">调整通道数量、波形类型、背景色等参数</span>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">3</span>
+                        <span class="step-text">启用对比模式可同时查看两种配色方案</span>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">4</span>
+                        <span class="step-text">点击导出按钮，确认配置后下载代码文件</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="color-scheme-section">
+                    <h3>🏆 标准配色方案</h3>
+                    
+                    <button class="scheme-button active" data-scheme="d3category10" title="D3.js标准配色，基于色彩科学设计，在Lab色域中具有最佳区分度">
+                        D3 Category10 ⭐
+                        <div class="scheme-description">D3.js标准配色，基于色彩科学设计，在Lab色域中具有最佳区分度</div>
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #1f77b4;"></div>
+                            <div class="color-dot" style="background: #ff7f0e;"></div>
+                            <div class="color-dot" style="background: #2ca02c;"></div>
+                            <div class="color-dot" style="background: #d62728;"></div>
+                            <div class="color-dot" style="background: #9467bd;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="tableau" title="基于D3 Category10，商业图表广泛使用">
+                        Tableau标准 (基于D3 Category10)
+                        <div class="scheme-description">基于D3 Category10，商业图表广泛使用</div>
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #1f77b4;"></div>
+                            <div class="color-dot" style="background: #ff7f0e;"></div>
+                            <div class="color-dot" style="background: #2ca02c;"></div>
+                            <div class="color-dot" style="background: #d62728;"></div>
+                            <div class="color-dot" style="background: #9467bd;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="d3category20" title="D3.js扩展配色，前10色为主色，后10色为对应浅色变体，适合大量数据系列">
+                        D3扩展20色
+                        <div class="scheme-description">D3.js扩展配色，前10色为主色，后10色为对应浅色变体，适合大量数据系列</div>
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #1f77b4;"></div>
+                            <div class="color-dot" style="background: #ff7f0e;"></div>
+                            <div class="color-dot" style="background: #2ca02c;"></div>
+                            <div class="color-dot" style="background: #d62728;"></div>
+                            <div class="color-dot" style="background: #9467bd;"></div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="color-scheme-section">
+                    <h3>📊 经典配色方案</h3>
+                    
+                    <button class="scheme-button" data-scheme="redblue">
+                        红蓝经典
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #FF0000;"></div>
+                            <div class="color-dot" style="background: #0000FF;"></div>
+                            <div class="color-dot" style="background: #FF6600;"></div>
+                            <div class="color-dot" style="background: #0066FF;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="professional">
+                        专业深色
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #E74C3C;"></div>
+                            <div class="color-dot" style="background: #3498DB;"></div>
+                            <div class="color-dot" style="background: #2ECC71;"></div>
+                            <div class="color-dot" style="background: #F39C12;"></div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="color-scheme-section">
+                    <h3>🎨 特殊用途</h3>
+                    
+                    <button class="scheme-button" data-scheme="accessibility">
+                        无障碍友好
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #1f77b4;"></div>
+                            <div class="color-dot" style="background: #ff7f0e;"></div>
+                            <div class="color-dot" style="background: #2ca02c;"></div>
+                            <div class="color-dot" style="background: #d62728;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="k">
+                        K 风格 (高对比)
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #FFD700;"></div>
+                            <div class="color-dot" style="background: #00CED1;"></div>
+                            <div class="color-dot" style="background: #FF6347;"></div>
+                            <div class="color-dot" style="background: #98FB98;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="t">
+                        T 风格 (鲜艳)
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #FFFF00;"></div>
+                            <div class="color-dot" style="background: #00FFFF;"></div>
+                            <div class="color-dot" style="background: #FF00FF;"></div>
+                            <div class="color-dot" style="background: #00FF00;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="r">
+                        R 风格 (现代)
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #00D4FF;"></div>
+                            <div class="color-dot" style="background: #FF4081;"></div>
+                            <div class="color-dot" style="background: #4CAF50;"></div>
+                            <div class="color-dot" style="background: #FF9800;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="n">
+                        N 风格 (纯色)
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #FF0000;"></div>
+                            <div class="color-dot" style="background: #00FF00;"></div>
+                            <div class="color-dot" style="background: #0000FF;"></div>
+                            <div class="color-dot" style="background: #FFFF00;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="m">
+                        M 风格 (科学)
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #0072BD;"></div>
+                            <div class="color-dot" style="background: #D95319;"></div>
+                            <div class="color-dot" style="background: #EDB120;"></div>
+                            <div class="color-dot" style="background: #7E2F8E;"></div>
+                        </div>
+                    </button>
+
+                    <button class="scheme-button" data-scheme="custom">
+                        自定义配色
+                        <div class="color-preview">
+                            <div class="color-dot" style="background: #FF6B6B;"></div>
+                            <div class="color-dot" style="background: #4ECDC4;"></div>
+                            <div class="color-dot" style="background: #45B7D1;"></div>
+                            <div class="color-dot" style="background: #96CEB4;"></div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="color-scheme-section">
+                    <h3>显示选项</h3>
+                    <div class="control-item">
+                        <label>
+                            <input type="checkbox" id="showGrid" checked> 显示网格
+                        </label>
+                    </div>
+                    <div class="control-item">
+                        <label>
+                            <input type="checkbox" id="showLegend" checked> 显示图例
+                        </label>
+                    </div>
+                    <div class="control-item">
+                        <label>
+                            <input type="checkbox" id="comparisonMode"> 对比模式
+                        </label>
+                    </div>
+                    <div class="control-item" id="comparisonSchemeSelector" style="display: none;">
+                        <label for="comparisonScheme">对比方案:</label>
+                        <select id="comparisonScheme" title="选择对比的配色方案">
+                            <option value="d3category10" selected>D3标准</option>
+                            <option value="d3category20">D3扩展20色</option>
+                            <option value="redblue">红蓝经典</option>
+                            <option value="professional">专业深色</option>
+                            <option value="accessibility">无障碍友好</option>
+                            <option value="k">K 风格</option>
+                            <option value="t">T 风格</option>
+                            <option value="r">R 风格</option>
+                            <option value="n">N 风格</option>
+                            <option value="m">M 风格</option>
+                            <option value="custom">自定义配色</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label for="lineWidth">线条宽度:</label>
+                        <input type="range" id="lineWidth" min="1" max="5" value="2" title="调整波形线条宽度">
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-area">
+                <div class="controls">
+                    <div class="control-group">
+                        <h4>🎨 背景配置</h4>
+                        <div class="control-item">
+                            <label for="backgroundColor">背景颜色:</label>
+                            <select id="backgroundColor" title="选择图表背景颜色">
+                                <option value="white" selected>白色 (EasyChartX默认)</option>
+                                <option value="black">黑色 (经典)</option>
+                                <option value="dark">深灰 (#2c3e50)</option>
+                                <option value="custom">自定义颜色</option>
+                            </select>
+                        </div>
+                        <div class="control-item" id="customBgColorPicker" style="display: none;">
+                            <label for="customBgColor">自定义背景:</label>
+                            <input type="color" id="customBgColor" value="#ffffff" title="选择自定义背景颜色" style="width: 100%; height: 35px; border: 1px solid #ced4da; border-radius: 5px; cursor: pointer;">
+                        </div>
+                        <div class="control-item">
+                            <label>
+                                <input type="checkbox" id="showGridInBg" checked> 显示网格线
+                            </label>
+                        </div>
+                        <div class="control-item" id="gridControls">
+                            <label for="gridOpacity">网格透明度:</label>
+                            <input type="range" id="gridOpacity" min="0.1" max="1" step="0.1" value="0.3" title="调整网格线透明度">
+                            <span id="gridOpacityValue">30%</span>
+                        </div>
+                        <div class="control-item" id="gridColorControls">
+                            <label for="gridColorMode">网格颜色:</label>
+                            <select id="gridColorMode" title="选择网格线颜色模式">
+                                <option value="auto" selected>自动适配背景</option>
+                                <option value="light">浅色 (#cccccc)</option>
+                                <option value="dark">深色 (#666666)</option>
+                                <option value="custom">自定义颜色</option>
+                            </select>
+                        </div>
+                        <div class="control-item" id="customGridColorPicker" style="display: none;">
+                            <label for="customGridColor">自定义网格色:</label>
+                            <input type="color" id="customGridColor" value="#cccccc" title="选择自定义网格线颜色" style="width: 100%; height: 35px; border: 1px solid #ced4da; border-radius: 5px; cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h4>📊 波形参数</h4>
+                        <div class="control-item">
+                            <label for="channelCount">通道数量:</label>
+                            <select id="channelCount" title="数据通道数量，决定波形间距和布局">
+                                <option value="1">1 通道 (单线)</option>
+                                <option value="2" selected>2 通道 (双线)</option>
+                                <option value="4">4 通道</option>
+                                <option value="6">6 通道</option>
+                                <option value="8">8 通道</option>
+                                <option value="12">12 通道</option>
+                            </select>
+                            <small style="color: #666; font-size: 12px;">📊 数据通道数，影响波形垂直布局</small>
+                        </div>
+                        <div class="control-item">
+                            <label for="waveformType">波形类型:</label>
+                            <select id="waveformType" title="选择波形的类型">
+                                <option value="sine">正弦波</option>
+                                <option value="square">方波</option>
+                                <option value="triangle">三角波</option>
+                                <option value="mixed" selected>混合波形</option>
+                            </select>
+                        </div>
+                        <div class="control-item">
+                            <label for="lineCount">线条数量:</label>
+                            <input type="number" id="lineCount" value="-1" min="-1" max="50" title="实际绘制的线条数量，可小于通道数">
+                            <small style="color: #666; font-size: 12px;">🎨 实际绘制线条数，-1=自动匹配通道数</small>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h4>🎨 色系分组 (高级)</h4>
+                        <div class="control-item">
+                            <label>
+                                <input type="checkbox" id="enableColorGroups"> 启用色系分组
+                            </label>
+                        </div>
+                        <div class="color-group-info" id="colorGroupInfo" style="display: none;">
+                            <div class="info-content">
+                                <strong>💡 功能说明：</strong>按逻辑关系分组配色，同组数据使用同色系的深浅变化
+                            </div>
+                            <div class="info-example">
+                                <strong>📋 应用示例：</strong>设备A组(蓝色系) vs 设备B组(橙色系)，合格组(绿色系) vs 不合格组(红色系)
+                            </div>
+                            <div class="info-params">
+                                <strong>⚙️ 参数说明：</strong>
+                                <br>• 色系数量×每组颜色数 = 总颜色数
+                                <br>• 总颜色数应 ≥ 通道数量，否则会循环使用
+                                <br>• 例：2色系×3颜色 = 6色，适合6通道以内
+                            </div>
+                        </div>
+                        <div class="control-item" id="colorGroupControls" style="display: none;">
+                            <label for="colorGroupCount">色系数量:</label>
+                            <select id="colorGroupCount" title="选择色系数量">
+                                <option value="1">单色系</option>
+                                <option value="2" selected>双色系 (如：合格/不合格)</option>
+                                <option value="3">三色系</option>
+                                <option value="4">四色系</option>
+                                <option value="5">五色系</option>
+                            </select>
+                        </div>
+                        <div class="control-item" id="groupSizeControls" style="display: none;">
+                            <label for="colorsPerGroup">每组颜色数:</label>
+                            <input type="number" id="colorsPerGroup" value="3" min="2" max="8" title="每个色系包含的颜色数量">
+                            <small style="color: #666; font-size: 12px;">每个色系内的渐变颜色数量</small>
+                        </div>
+                    </div>
+
+                    <div class="control-group export-section">
+                        <h4>📤 导出配色方案</h4>
+                        <div class="export-buttons-container">
+                            <button class="export-button" onclick="exportColorScheme()">导出 JSON</button>
+                            <button class="export-button" onclick="exportCSS()">导出 CSS</button>
+                            <button class="export-button" onclick="exportCode()">导出 JS</button>
+                            <button class="export-button" onclick="exportCSharp()">导出 C#</button>
+                        </div>
+                        <div class="export-info">
+                            <h5>💡 C# 代码说明</h5>
+                            <p>导出的C#代码包含完整的EasyChartX配置，可直接复制到WinForms项目的按钮点击事件中。代码会自动设置图表背景、网格线、图例和多通道波形颜色，并生成示例数据进行绘制。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chartArea">
+                    <div class="chart-container">
+                        <div class="chart-title">EasyChartX 多通道波形显示预览</div>
+                        <canvas class="waveform-canvas" id="waveformCanvas"></canvas>
+                        <svg class="grid-overlay" id="gridOverlay"></svg>
+                        <div class="legend" id="legend"></div>
+                    </div>
+                </div>
+
+                <div id="comparisonArea" class="comparison-mode" style="display: none;">
+                    <div class="comparison-chart">
+                        <div class="comparison-title">当前方案</div>
+                        <div style="position: relative;">
+                            <canvas class="comparison-canvas" id="comparisonCanvas1"></canvas>
+                            <svg class="grid-overlay" id="gridOverlay1"></svg>
+                        </div>
+                    </div>
+                    <div class="comparison-chart">
+                        <div class="comparison-title">对比方案</div>
+                        <div style="position: relative;">
+                            <canvas class="comparison-canvas" id="comparisonCanvas2"></canvas>
+                            <svg class="grid-overlay" id="gridOverlay2"></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-values" id="colorValues"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 配色方案定义
+        const colorSchemes = {
+            d3category10: {
+                name: "D3 Category10",
+                colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
+                description: "D3.js标准配色，基于色彩科学设计，在Lab色域中具有最佳区分度",
+                category: "standard",
+                recommended: true
+            },
+            tableau: {
+                name: "Tableau标准",
+                colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
+                description: "基于D3 Category10，商业图表广泛使用",
+                category: "standard"
+            },
+            d3category20: {
+                name: "D3扩展20色",
+                colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5"],
+                description: "D3.js扩展配色，前10色为主色，后10色为对应浅色变体，适合大量数据系列",
+                category: "standard"
+            },
+            redblue: {
+                name: "红蓝经典",
+                colors: ["#FF0000", "#0000FF", "#FF6600", "#0066FF", "#FF3333", "#3333FF", "#FF9900", "#0099FF"],
+                description: "最常用的红蓝配色，适合1-2根线的应用场景",
+                category: "classic"
+            },
+            professional: {
+                name: "专业深色",
+                colors: ["#E74C3C", "#3498DB", "#2ECC71", "#F39C12", "#9B59B6", "#1ABC9C", "#E67E22", "#34495E"],
+                description: "现代专业配色，适合长时间观看",
+                category: "classic"
+            },
+            accessibility: {
+                name: "无障碍友好",
+                colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f"],
+                description: "考虑色盲用户的友好配色方案",
+                category: "special"
+            },
+            k: {
+                name: "K 风格",
+                colors: ["#FFD700", "#00CED1", "#FF6347", "#98FB98", "#DDA0DD", "#F0E68C", "#87CEEB", "#F4A460"],
+                description: "高对比度配色，易于区分",
+                category: "special"
+            },
+            t: {
+                name: "T 风格", 
+                colors: ["#FFFF00", "#00FFFF", "#FF00FF", "#00FF00", "#FF8000", "#8080FF", "#FF80FF", "#80FF80"],
+                description: "鲜艳明亮配色，适合暗背景",
+                category: "special"
+            },
+            r: {
+                name: "R 风格",
+                colors: ["#00D4FF", "#FF4081", "#4CAF50", "#FF9800", "#9C27B0", "#FFEB3B", "#E91E63", "#2196F3"],
+                description: "现代化配色方案，平衡专业性和美观性",
+                category: "special"
+            },
+            n: {
+                name: "N 风格",
+                colors: ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#FF8000", "#8000FF"],
+                description: "纯色系配色，高饱和度",
+                category: "special"
+            },
+            m: {
+                name: "M 风格",
+                colors: ["#0072BD", "#D95319", "#EDB120", "#7E2F8E", "#77AC30", "#4DBEEE", "#A2142F", "#FF6600"],
+                description: "科学计算领域广泛使用的配色",
+                category: "special"
+            },
+            custom: {
+                name: "自定义配色",
+                colors: ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#74B9FF", "#FD79A8"],
+                description: "现代渐变风格，美观且专业",
+                category: "custom"
+            }
+        };
+
+        let currentScheme = 'd3category10';
+        let animationId;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            updateDisplay();
+            startAnimation();
+        });
+
+        function setupEventListeners() {
+            // 配色方案按钮
+            document.querySelectorAll('.scheme-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.scheme-button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentScheme = this.dataset.scheme;
+                    updateDisplay();
+                });
+            });
+
+            // 控制选项
+            document.getElementById('channelCount').addEventListener('change', updateDisplay);
+            document.getElementById('waveformType').addEventListener('change', updateDisplay);
+            document.getElementById('lineWidth').addEventListener('change', updateDisplay);
+            document.getElementById('lineCount').addEventListener('change', updateDisplay);
+            document.getElementById('showGrid').addEventListener('change', updateDisplay);
+            document.getElementById('showLegend').addEventListener('change', updateDisplay);
+            
+            // 背景配置
+            document.getElementById('backgroundColor').addEventListener('change', function() {
+                const customPicker = document.getElementById('customBgColorPicker');
+                if (this.value === 'custom') {
+                    customPicker.style.display = 'block';
+                } else {
+                    customPicker.style.display = 'none';
+                }
+                updateDisplay();
+            });
+            
+            document.getElementById('customBgColor').addEventListener('change', updateDisplay);
+            
+            // 网格线配置
+            document.getElementById('showGridInBg').addEventListener('change', function() {
+                const gridControls = document.getElementById('gridControls');
+                const gridColorControls = document.getElementById('gridColorControls');
+                if (this.checked) {
+                    gridControls.style.display = 'block';
+                    gridColorControls.style.display = 'block';
+                } else {
+                    gridControls.style.display = 'none';
+                    gridColorControls.style.display = 'none';
+                }
+                updateDisplay();
+            });
+            
+            document.getElementById('gridOpacity').addEventListener('input', function() {
+                const value = Math.round(this.value * 100);
+                document.getElementById('gridOpacityValue').textContent = value + '%';
+                updateDisplay();
+            });
+            
+            document.getElementById('gridColorMode').addEventListener('change', function() {
+                const customGridColorPicker = document.getElementById('customGridColorPicker');
+                if (this.value === 'custom') {
+                    customGridColorPicker.style.display = 'block';
+                } else {
+                    customGridColorPicker.style.display = 'none';
+                }
+                updateDisplay();
+            });
+            
+            document.getElementById('customGridColor').addEventListener('change', updateDisplay);
+            
+            // 色系分组配置
+            document.getElementById('enableColorGroups').addEventListener('change', function() {
+                const colorGroupInfo = document.getElementById('colorGroupInfo');
+                const colorGroupControls = document.getElementById('colorGroupControls');
+                const groupSizeControls = document.getElementById('groupSizeControls');
+                if (this.checked) {
+                    colorGroupInfo.style.display = 'block';
+                    colorGroupControls.style.display = 'block';
+                    groupSizeControls.style.display = 'block';
+                } else {
+                    colorGroupInfo.style.display = 'none';
+                    colorGroupControls.style.display = 'none';
+                    groupSizeControls.style.display = 'none';
+                }
+                updateDisplay();
+            });
+            
+            document.getElementById('colorGroupCount').addEventListener('change', updateDisplay);
+            document.getElementById('colorsPerGroup').addEventListener('change', updateDisplay);
+            
+            document.getElementById('comparisonMode').addEventListener('change', function() {
+                const comparisonArea = document.getElementById('comparisonArea');
+                const chartArea = document.getElementById('chartArea');
+                const comparisonSchemeSelector = document.getElementById('comparisonSchemeSelector');
+                
+                if (this.checked) {
+                    comparisonArea.style.display = 'grid';
+                    chartArea.style.display = 'none';
+                    comparisonSchemeSelector.style.display = 'block';
+                    updateComparisonDisplay();
+                } else {
+                    comparisonArea.style.display = 'none';
+                    chartArea.style.display = 'block';
+                    comparisonSchemeSelector.style.display = 'none';
+                    updateDisplay();
+                }
+            });
+            
+            document.getElementById('comparisonScheme').addEventListener('change', function() {
+                if (document.getElementById('comparisonMode').checked) {
+                    updateComparisonDisplay();
+                }
+            });
+        }
+
+        function updateDisplay() {
+            const canvas = document.getElementById('waveformCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置canvas尺寸
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            drawWaveforms(ctx, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+            updateChartContainer();
+            updateGrid();
+            updateLegend();
+            updateColorValues();
+        }
+
+        function updateComparisonGrid(svgId, width, height) {
+            const showGrid = document.getElementById('showGrid').checked;
+            const showGridInBg = document.getElementById('showGridInBg').checked;
+            const svg = document.getElementById(svgId);
+            
+            // 如果两个网格开关都关闭，则不显示网格
+            if (!showGrid || !showGridInBg) {
+                svg.innerHTML = '';
+                return;
+            }
+            
+            const gridColor = getCustomGridColor();
+            const gridOpacity = parseFloat(document.getElementById('gridOpacity').value);
+            
+            svg.style.opacity = gridOpacity;
+            
+            // 计算实际波形显示区域（排除标题区域，对比模式没有图例）
+            const titleHeight = 40; // 对比模式标题区域高度
+            const waveformAreaTop = titleHeight;
+            const waveformAreaHeight = height - titleHeight;
+            
+            let gridHTML = '';
+            
+            // 垂直网格线（只在波形区域显示）
+            for (let x = 0; x <= width; x += width / 10) {
+                gridHTML += `<line x1="${x}" y1="${waveformAreaTop}" x2="${x}" y2="${waveformAreaTop + waveformAreaHeight}" stroke="${gridColor}" stroke-width="1"/>`;
+            }
+            
+            // 水平网格线（只在波形区域显示）
+            for (let y = waveformAreaTop; y <= waveformAreaTop + waveformAreaHeight; y += waveformAreaHeight / 6) {
+                gridHTML += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`;
+            }
+            
+            svg.innerHTML = gridHTML;
+        }
+
+        function updateComparisonDisplay() {
+            const canvas1 = document.getElementById('comparisonCanvas1');
+            const canvas2 = document.getElementById('comparisonCanvas2');
+            const ctx1 = canvas1.getContext('2d');
+            const ctx2 = canvas2.getContext('2d');
+            
+            // 设置canvas尺寸
+            [canvas1, canvas2].forEach(canvas => {
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * window.devicePixelRatio;
+                canvas.height = rect.height * window.devicePixelRatio;
+                canvas.getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
+            });
+            
+            const width = canvas1.getBoundingClientRect().width;
+            const height = canvas1.getBoundingClientRect().height;
+            
+            // 绘制当前方案
+            drawWaveforms(ctx1, width, height);
+            
+            // 绘制对比方案（使用用户选择的配色）
+            const originalScheme = currentScheme;
+            const comparisonScheme = document.getElementById('comparisonScheme').value;
+            currentScheme = comparisonScheme;
+            drawWaveforms(ctx2, width, height);
+            currentScheme = originalScheme;
+            
+            // 更新对比模式下的网格线
+            updateComparisonGrid('gridOverlay1', width, height);
+            updateComparisonGrid('gridOverlay2', width, height);
+            
+            // 更新对比模式下的颜色值信息
+            updateComparisonColorValues();
+        }
+
+        function getBackgroundColor() {
+            const bgSelect = document.getElementById('backgroundColor').value;
+            switch (bgSelect) {
+                case 'white':
+                    return '#ffffff';
+                case 'black':
+                    return '#000000';
+                case 'dark':
+                    return '#2c3e50';
+                case 'custom':
+                    return document.getElementById('customBgColor').value;
+                default:
+                    return '#ffffff';
+            }
+        }
+
+        function getGridColor(backgroundColor) {
+            // 根据背景色智能选择网格线颜色
+            const bgColor = backgroundColor.toLowerCase();
+            if (bgColor === '#ffffff' || bgColor === '#fff' || bgColor === 'white') {
+                return '#cccccc'; // 浅灰色网格线适合白色背景
+            } else if (bgColor === '#000000' || bgColor === '#000' || bgColor === 'black') {
+                return '#666666'; // 深灰色网格线适合黑色背景
+            } else {
+                // 对于其他颜色，计算亮度来决定网格线颜色
+                const hex = bgColor.replace('#', '');
+                const r = parseInt(hex.substr(0, 2), 16);
+                const g = parseInt(hex.substr(2, 2), 16);
+                const b = parseInt(hex.substr(4, 2), 16);
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                return brightness > 128 ? '#999999' : '#666666';
+            }
+        }
+
+        function getTextColor(backgroundColor) {
+            // 根据背景色智能选择文字颜色
+            const bgColor = backgroundColor.toLowerCase();
+            if (bgColor === '#ffffff' || bgColor === '#fff' || bgColor === 'white') {
+                return '#333333'; // 深色文字适合白色背景
+            } else if (bgColor === '#000000' || bgColor === '#000' || bgColor === 'black') {
+                return '#ffffff'; // 白色文字适合黑色背景
+            } else {
+                // 对于其他颜色，计算亮度来决定文字颜色
+                const hex = bgColor.replace('#', '');
+                const r = parseInt(hex.substr(0, 2), 16);
+                const g = parseInt(hex.substr(2, 2), 16);
+                const b = parseInt(hex.substr(4, 2), 16);
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                return brightness > 128 ? '#333333' : '#ffffff';
+            }
+        }
+
+        // 色系分组功能
+        function hexToHsl(hex) {
+            const r = parseInt(hex.slice(1, 3), 16) / 255;
+            const g = parseInt(hex.slice(3, 5), 16) / 255;
+            const b = parseInt(hex.slice(5, 7), 16) / 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0; // achromatic
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            
+            return { h: h * 360, s: s * 100, l: l * 100 };
+        }
+        
+        function hslToHex(h, s, l) {
+            h = h / 360;
+            s = s / 100;
+            l = l / 100;
+            
+            const hue2rgb = (p, q, t) => {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1/6) return p + (q - p) * 6 * t;
+                if (t < 1/2) return q;
+                if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                return p;
+            };
+            
+            let r, g, b;
+            
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            } else {
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            
+            const toHex = (c) => {
+                const hex = Math.round(c * 255).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        }
+        
+        function generateColorGroup(baseColor, count) {
+            const hsl = hexToHsl(baseColor);
+            const colors = [];
+            
+            for (let i = 0; i < count; i++) {
+                // 从主色到浅色的渐变
+                const lightnessFactor = 1 - (i * 0.15); // 每步减少15%亮度
+                const newLightness = Math.max(hsl.l * lightnessFactor, 20); // 最低亮度20%
+                const newSaturation = Math.max(hsl.s * (0.8 + i * 0.05), 30); // 适当调整饱和度
+                
+                colors.push(hslToHex(hsl.h, newSaturation, newLightness));
+            }
+            
+            return colors;
+        }
+        
+        function generateColorGroups() {
+            const enableColorGroups = document.getElementById('enableColorGroups').checked;
+            if (!enableColorGroups) {
+                return null;
+            }
+            
+            const groupCount = parseInt(document.getElementById('colorGroupCount').value);
+            const colorsPerGroup = parseInt(document.getElementById('colorsPerGroup').value);
+            
+            // 基础色系主色（确保色系间有足够区分度）
+            const baseColors = [
+                '#1f77b4', // 蓝色系
+                '#ff7f0e', // 橙色系
+                '#2ca02c', // 绿色系
+                '#d62728', // 红色系
+                '#9467bd'  // 紫色系
+            ];
+            
+            const colorGroups = [];
+            for (let i = 0; i < groupCount; i++) {
+                const baseColor = baseColors[i % baseColors.length];
+                const groupColors = generateColorGroup(baseColor, colorsPerGroup);
+                colorGroups.push(groupColors);
+            }
+            
+            return colorGroups;
+        }
+        
+        function getCurrentColors() {
+            const colorGroups = generateColorGroups();
+            if (colorGroups) {
+                // 色系分组模式：将所有色系的颜色平铺
+                const allColors = [];
+                for (const group of colorGroups) {
+                    allColors.push(...group);
+                }
+                return allColors;
+            } else {
+                // 普通模式：使用原始配色方案
+                return colorSchemes[currentScheme].colors;
+            }
+        }
+
+        function drawWaveforms(ctx, width, height) {
+            const colors = getCurrentColors();
+            const channelCount = parseInt(document.getElementById('channelCount').value);
+            const lineCountInput = parseInt(document.getElementById('lineCount').value);
+            const actualLineCount = lineCountInput === -1 ? channelCount : Math.min(lineCountInput, channelCount);
+            const waveformType = document.getElementById('waveformType').value;
+            const lineWidth = parseInt(document.getElementById('lineWidth').value);
+            const backgroundColor = getBackgroundColor();
+            
+            // 设置背景
+            ctx.fillStyle = backgroundColor;
+            ctx.fillRect(0, 0, width, height);
+            
+            // 计算实际波形显示区域（优化显示区域分配）
+            const titleHeight = 45; // 减少标题区域高度
+            const legendHeight = 35; // 减少图例区域高度
+            const waveformAreaTop = titleHeight;
+            const waveformAreaHeight = height - titleHeight - legendHeight;
+            
+            // 绘制波形
+            const time = Date.now() * 0.001;
+            const points = 1000;
+            
+            // 优化波形间距和幅度计算，增强视觉效果
+            const channelSpacing = waveformAreaHeight / (channelCount + 1); // 通道间距
+            // 增加波形幅度，使波形更加陡峭明显
+            const baseAmplitude = Math.min(channelSpacing * 0.45, waveformAreaHeight * 0.25); // 提升幅度系数
+            
+            for (let channel = 0; channel < actualLineCount; channel++) {
+                ctx.strokeStyle = colors[channel % colors.length];
+                ctx.lineWidth = lineWidth;
+                ctx.beginPath();
+                
+                // 计算当前通道的中心线位置
+                const channelCenterY = waveformAreaTop + channelSpacing * (channel + 1);
+                
+                for (let i = 0; i < points; i++) {
+                    const x = (i / points) * width;
+                    const t = (i / points) * 6 * Math.PI + time; // 增加频率使波形更密集
+                    let waveValue;
+                    
+                    switch (waveformType) {
+                        case 'sine':
+                            // 标准正弦波
+                            waveValue = Math.sin(t + channel * 0.7);
+                            break;
+                        case 'square':
+                            // 标准方波
+                            waveValue = Math.sign(Math.sin(t + channel * 0.7));
+                            break;
+                        case 'triangle':
+                            // 标准三角波
+                            waveValue = (2 / Math.PI) * Math.asin(Math.sin(t + channel * 0.7));
+                            break;
+                        case 'mixed':
+                            if (channel % 3 === 0) {
+                                // 正弦波
+                                waveValue = Math.sin(t + channel * 0.7);
+                            } else if (channel % 3 === 1) {
+                                // 方波
+                                waveValue = Math.sign(Math.sin(t + channel * 0.7));
+                            } else {
+                                // 三角波
+                                waveValue = (2 / Math.PI) * Math.asin(Math.sin(t + channel * 0.7));
+                            }
+                            break;
+                    }
+                    
+                    // 限制波形值范围，防止过度夸张
+                    waveValue = Math.max(-1, Math.min(1, waveValue));
+                    
+                    // 计算最终的Y坐标，应用动态幅度调整
+                    const dynamicAmplitude = baseAmplitude * (0.8 + 0.4 * Math.sin(time * 0.5 + channel)); // 轻微的幅度变化
+                    const y = channelCenterY + waveValue * dynamicAmplitude;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                ctx.stroke();
+            }
+        }
+
+        function getCustomGridColor() {
+            const gridColorMode = document.getElementById('gridColorMode').value;
+            const backgroundColor = getBackgroundColor();
+            
+            switch (gridColorMode) {
+                case 'auto':
+                    return getGridColor(backgroundColor);
+                case 'light':
+                    return '#cccccc';
+                case 'dark':
+                    return '#666666';
+                case 'custom':
+                    return document.getElementById('customGridColor').value;
+                default:
+                    return getGridColor(backgroundColor);
+            }
+        }
+
+        function updateGrid() {
+            const showGrid = document.getElementById('showGrid').checked;
+            const showGridInBg = document.getElementById('showGridInBg').checked;
+            const svg = document.getElementById('gridOverlay');
+            
+            // 如果两个网格开关都关闭，则不显示网格
+            if (!showGrid || !showGridInBg) {
+                svg.innerHTML = '';
+                return;
+            }
+            
+            const gridColor = getCustomGridColor();
+            const gridOpacity = parseFloat(document.getElementById('gridOpacity').value);
+            
+            svg.style.opacity = gridOpacity;
+            
+            const width = svg.clientWidth;
+            const height = svg.clientHeight;
+            
+            // 计算实际波形显示区域（排除标题和图例区域）
+            const titleHeight = 60; // 标题区域高度
+            const legendHeight = 50; // 图例区域高度
+            const waveformAreaTop = titleHeight;
+            const waveformAreaHeight = height - titleHeight - legendHeight;
+            
+            let gridHTML = '';
+            
+            // 垂直网格线（只在波形区域显示）
+            for (let x = 0; x <= width; x += width / 10) {
+                gridHTML += `<line x1="${x}" y1="${waveformAreaTop}" x2="${x}" y2="${waveformAreaTop + waveformAreaHeight}" stroke="${gridColor}" stroke-width="1"/>`;
+            }
+            
+            // 水平网格线（只在波形区域显示）
+            for (let y = waveformAreaTop; y <= waveformAreaTop + waveformAreaHeight; y += waveformAreaHeight / 6) {
+                gridHTML += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`;
+            }
+            
+            svg.innerHTML = gridHTML;
+        }
+
+        function updateChartContainer() {
+            const backgroundColor = getBackgroundColor();
+            const textColor = getTextColor(backgroundColor);
+            const chartContainer = document.querySelector('.chart-container');
+            const chartTitle = document.querySelector('.chart-title');
+            
+            // 更新图表容器背景
+            chartContainer.style.background = backgroundColor;
+            
+            // 更新标题文字颜色
+            chartTitle.style.color = textColor;
+        }
+
+        function updateLegend() {
+            const showLegend = document.getElementById('showLegend').checked;
+            const legend = document.getElementById('legend');
+            const channelCount = parseInt(document.getElementById('channelCount').value);
+            const scheme = colorSchemes[currentScheme];
+            const backgroundColor = getBackgroundColor();
+            const textColor = getTextColor(backgroundColor);
+            
+            if (!showLegend) {
+                legend.innerHTML = '';
+                return;
+            }
+            
+            let legendHTML = '';
+            for (let i = 0; i < channelCount; i++) {
+                const color = scheme.colors[i % scheme.colors.length];
+                legendHTML += `
+                    <div class="legend-item" style="color: ${textColor};">
+                        <div class="legend-color" style="background: ${color};"></div>
+                        <span>Channel${i + 1}</span>
+                    </div>
+                `;
+            }
+            
+            legend.innerHTML = legendHTML;
+        }
+
+        function updateColorValues() {
+            const scheme = colorSchemes[currentScheme];
+            const channelCount = parseInt(document.getElementById('channelCount').value);
+            const colorValues = document.getElementById('colorValues');
+            
+            let html = `<h4>${scheme.name}</h4>`;
+            html += `<p>${scheme.description}</p><br>`;
+            html += `<strong>通道数量:</strong> ${channelCount}<br>`;
+            html += `<strong>配色方案颜色数:</strong> ${scheme.colors.length}<br><br>`;
+            html += `<strong>颜色值:</strong><br><br>`;
+            
+            for (let i = 0; i < channelCount; i++) {
+                const color = scheme.colors[i % scheme.colors.length];
+                html += `Channel${i + 1}: ${color}<br>`;
+            }
+            
+            colorValues.innerHTML = html;
+        }
+
+        function updateComparisonColorValues() {
+            const currentSchemeData = colorSchemes[currentScheme];
+            const comparisonSchemeKey = document.getElementById('comparisonScheme').value;
+            const comparisonSchemeData = colorSchemes[comparisonSchemeKey];
+            const channelCount = parseInt(document.getElementById('channelCount').value);
+            const colorValues = document.getElementById('colorValues');
+            
+            let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">`;
+            
+            // 当前方案信息
+            html += `<div>`;
+            html += `<h4 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px;">当前方案: ${currentSchemeData.name}</h4>`;
+            html += `<p style="margin: 10px 0;">${currentSchemeData.description}</p>`;
+            html += `<strong>通道数量:</strong> ${channelCount}<br>`;
+            html += `<strong>配色方案颜色数:</strong> ${currentSchemeData.colors.length}<br><br>`;
+            html += `<strong>颜色值:</strong><br>`;
+            
+            for (let i = 0; i < channelCount; i++) {
+                const color = currentSchemeData.colors[i % currentSchemeData.colors.length];
+                html += `Channel${i + 1}: ${color}<br>`;
+            }
+            html += `</div>`;
+            
+            // 对比方案信息
+            html += `<div>`;
+            html += `<h4 style="color: #2c3e50; border-bottom: 2px solid #e74c3c; padding-bottom: 5px;">对比方案: ${comparisonSchemeData.name}</h4>`;
+            html += `<p style="margin: 10px 0;">${comparisonSchemeData.description}</p>`;
+            html += `<strong>通道数量:</strong> ${channelCount}<br>`;
+            html += `<strong>配色方案颜色数:</strong> ${comparisonSchemeData.colors.length}<br><br>`;
+            html += `<strong>颜色值:</strong><br>`;
+            
+            for (let i = 0; i < channelCount; i++) {
+                const color = comparisonSchemeData.colors[i % comparisonSchemeData.colors.length];
+                html += `Channel${i + 1}: ${color}<br>`;
+            }
+            html += `</div>`;
+            
+            html += `</div>`;
+            
+            colorValues.innerHTML = html;
+        }
+
+        function startAnimation() {
+            function animate() {
+                if (document.getElementById('comparisonMode').checked) {
+                    updateComparisonDisplay();
+                } else {
+                    updateDisplay();
+                }
+                animationId = requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        function stopAnimation() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        function getExportInfo() {
+            const scheme = colorSchemes[currentScheme];
+            const channelCount = parseInt(document.getElementById('channelCount').value);
+            const isComparison = document.getElementById('comparisonMode').checked;
+            const backgroundColor = document.getElementById('backgroundColor').value;
+            const waveformType = document.getElementById('waveformType').value;
+            const enableColorGroups = document.getElementById('enableColorGroups').checked;
+            
+            let info = {
+                schemeName: scheme.name,
+                schemeDescription: scheme.description,
+                channelCount: channelCount,
+                totalColors: scheme.colors.length,
+                backgroundColor: backgroundColor,
+                waveformType: waveformType,
+                isComparison: isComparison,
+                enableColorGroups: enableColorGroups,
+                colors: scheme.colors.slice(0, Math.min(channelCount, scheme.colors.length))
+            };
+            
+            if (isComparison) {
+                const comparisonSchemeKey = document.getElementById('comparisonScheme').value;
+                const comparisonScheme = colorSchemes[comparisonSchemeKey];
+                info.comparisonSchemeName = comparisonScheme.name;
+                info.comparisonColors = comparisonScheme.colors.slice(0, Math.min(channelCount, comparisonScheme.colors.length));
+            }
+            
+            if (enableColorGroups) {
+                const groupCount = parseInt(document.getElementById('colorGroupCount').value);
+                const colorsPerGroup = parseInt(document.getElementById('colorsPerGroup').value);
+                info.colorGroups = {
+                    groupCount: groupCount,
+                    colorsPerGroup: colorsPerGroup
+                };
+            }
+            
+            return info;
+        }
+        
+        function showExportConfirmation(exportType, callback) {
+            const info = getExportInfo();
+            
+            let message = `📊 导出配色方案确认\n\n`;
+            message += `导出格式: ${exportType}\n`;
+            message += `配色方案: ${info.schemeName}\n`;
+            message += `方案描述: ${info.schemeDescription}\n`;
+            message += `通道数量: ${info.channelCount}\n`;
+            message += `背景颜色: ${info.backgroundColor}\n`;
+            message += `波形类型: ${info.waveformType}\n`;
+            
+            if (info.isComparison) {
+                message += `\n🔄 对比模式已启用\n`;
+                message += `当前方案: ${info.schemeName}\n`;
+                message += `对比方案: ${info.comparisonSchemeName}\n`;
+                message += `注意: 将导出当前选中的主方案 (${info.schemeName})\n`;
+            }
+            
+            if (info.enableColorGroups) {
+                message += `\n🎨 色系分组已启用\n`;
+                message += `色系数量: ${info.colorGroups.groupCount}\n`;
+                message += `每组颜色数: ${info.colorGroups.colorsPerGroup}\n`;
+            }
+            
+            message += `\n🎨 使用的颜色值:\n`;
+            info.colors.forEach((color, index) => {
+                message += `Channel${index + 1}: ${color}\n`;
+            });
+            
+            message += `\n确认导出此配色方案吗？`;
+            
+            if (confirm(message)) {
+                callback();
+            }
+        }
+
+        function exportColorScheme() {
+            showExportConfirmation('JSON', () => {
+                const scheme = colorSchemes[currentScheme];
+                const channelCount = parseInt(document.getElementById('channelCount').value);
+                const exportData = {
+                    name: scheme.name,
+                    description: scheme.description,
+                    colors: scheme.colors.slice(0, channelCount),
+                    channelCount: channelCount,
+                    exportDate: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `easychartx-colors-${currentScheme}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function exportCSS() {
+            showExportConfirmation('CSS', () => {
+                const scheme = colorSchemes[currentScheme];
+                const channelCount = parseInt(document.getElementById('channelCount').value);
+                
+                let css = `/* EasyChartX ${scheme.name} 配色方案 */\n`;
+                css += `/* ${scheme.description} */\n\n`;
+                css += `:root {\n`;
+                
+                for (let i = 0; i < Math.min(channelCount, scheme.colors.length); i++) {
+                    css += `  --channel-${i + 1}-color: ${scheme.colors[i]};\n`;
+                }
+                
+                css += `}\n\n`;
+                css += `.waveform-channel-1 { stroke: var(--channel-1-color); }\n`;
+                
+                for (let i = 1; i < Math.min(channelCount, scheme.colors.length); i++) {
+                    css += `.waveform-channel-${i + 1} { stroke: var(--channel-${i + 1}-color); }\n`;
+                }
+                
+                const dataBlob = new Blob([css], {type: 'text/css'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `easychartx-colors-${currentScheme}.css`;
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function exportCode() {
+            showExportConfirmation('JavaScript', () => {
+                const scheme = colorSchemes[currentScheme];
+                const channelCount = parseInt(document.getElementById('channelCount').value);
+                
+                let code = `// EasyChartX ${scheme.name} 配色方案\n`;
+                code += `// ${scheme.description}\n\n`;
+                code += `const channelColors = [\n`;
+                
+                for (let i = 0; i < Math.min(channelCount, scheme.colors.length); i++) {
+                    code += `    "${scheme.colors[i]}"${i < Math.min(channelCount, scheme.colors.length) - 1 ? ',' : ''} // Channel ${i + 1}\n`;
+                }
+                
+                code += `];\n\n`;
+                code += `// 使用示例:\n`;
+                code += `// chart.setChannelColor(channelIndex, channelColors[channelIndex]);\n`;
+                
+                const dataBlob = new Blob([code], {type: 'text/javascript'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `easychartx-colors-${currentScheme}.js`;
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        // 辅助函数：将十六进制颜色转换为C#颜色代码
+        function hexToColor(hex) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `Color.FromArgb(${r}, ${g}, ${b})`;
+        }
+
+        function exportCSharp() {
+            showExportConfirmation('C#', () => {
+                const scheme = colorSchemes[currentScheme];
+                const channelCount = parseInt(document.getElementById('channelCount').value);
+                
+                let code = `// EasyChartX ${scheme.name} 配色方案\n`;
+                code += `// ${scheme.description}\n`;
+                code += `// 通道数量: ${channelCount}\n`;
+                code += `// 配色方案颜色数: ${scheme.colors.length}\n`;
+                code += `// 生成时间: ${new Date().toLocaleString('zh-CN')}\n\n`;
+                code += `using System.Drawing;\n\n`;
+                
+                code += `private void GuiRefresh_Click(object sender, EventArgs e)\n`;
+                code += `{\n`;
+                
+                // 设置图表背景和样式
+                code += `    // 设置图表背景和样式\n`;
+                code += `    easyChartX1.BackColor = Color.Black;\n`;
+                code += `    easyChartX1.ChartAreaBackColor = Color.Black;\n\n`;
+                
+                // 设置坐标轴和网格线
+                code += `    // 设置坐标轴和网格线\n`;
+                code += `    easyChartX1.AxisX.Color = Color.Gray;\n`;
+                code += `    easyChartX1.AxisX.MajorGridColor = Color.Gray;\n`;
+                code += `    easyChartX1.AxisX.MinorGridColor = Color.Gray;\n`;
+                code += `    easyChartX1.AxisY.Color = Color.Gray;\n`;
+                code += `    easyChartX1.AxisY.MajorGridColor = Color.Gray;\n`;
+                code += `    easyChartX1.AxisY.MinorGridColor = Color.Gray;\n\n`;
+                
+                // 设置图例
+                code += `    // 设置图例\n`;
+                code += `    easyChartX1.LegendBackColor = Color.Black;\n`;
+                code += `    easyChartX1.LegendForeColor = Color.White;\n`;
+                code += `    easyChartX1.LegendVisible = true;\n\n`;
+                
+                // 获取曲线颜色表
+                code += `    // 获取曲线颜色表\n`;
+                code += `    var colorTable = new Color[${scheme.colors.length}];\n`;
+                
+                for (let i = 0; i < scheme.colors.length; i++) {
+                    const colorValue = hexToColor(scheme.colors[i]);
+                    code += `    colorTable[${i}] = ${colorValue}; // ${scheme.colors[i]}\n`;
+                }
+                
+                code += `\n    // 设置要绘制的曲线个数\n`;
+                code += `    int numOfWaveforms = ${channelCount};\n`;
+                code += `    easyChartX1.Series.AdaptSeriesCount(numOfWaveforms);\n\n`;
+                
+                // 根据曲线颜色表循环设置各曲线的颜色
+                code += `    // 根据曲线颜色表循环设置各曲线的颜色\n`;
+                if (channelCount <= scheme.colors.length) {
+                    code += `    // 直接设置各曲线的颜色\n`;
+                    code += `    for (int i = 0; i < numOfWaveforms; i++)\n`;
+                    code += `    {\n`;
+                    code += `        easyChartX1.Series[i].Color = colorTable[i];\n`;
+                    code += `    }\n\n`;
+                } else {
+                    code += `    // 如果曲线个数大于颜色表长度，则循环使用\n`;
+                    code += `    for (int i = 0; i < numOfWaveforms; i++)\n`;
+                    code += `    {\n`;
+                    code += `        easyChartX1.Series[i].Color = colorTable[i % colorTable.Length];\n`;
+                    code += `    }\n\n`;
+                }
+                
+                // 生成波形数据示例
+                code += `    // 生成波形数据示例\n`;
+                code += `    int numOfSamples = 2000;\n`;
+                code += `    var oneChannelWaveform = new double[numOfSamples];\n`;
+                code += `    var allWaveforms = new double[numOfSamples, numOfWaveforms];\n`;
+                code += `    for (int i = 0; i < numOfWaveforms; i++)\n`;
+                code += `    {\n`;
+                code += `        Generation.SineWave(ref oneChannelWaveform, 1, i * 10);\n`;
+                code += `        for (int j = 0; j < numOfSamples; j++)\n`;
+                code += `        {\n`;
+                code += `            allWaveforms[j, i] = oneChannelWaveform[j];\n`;
+                code += `        }\n`;
+                code += `    }\n\n`;
+                
+                code += `    // 绘制波形\n`;
+                code += `    easyChartX1.Plot(allWaveforms, 0, 1);\n`;
+                code += `}\n`;
+                
+                const dataBlob = new Blob([code], {type: 'text/plain'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `easychartx-colors-${currentScheme}.cs`;
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        // 窗口大小改变时重新绘制
+        window.addEventListener('resize', function() {
+            setTimeout(updateDisplay, 100);
+        });
+    </script>
+</body>
+</html>

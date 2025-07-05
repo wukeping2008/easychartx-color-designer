@@ -1,0 +1,130 @@
+{
+  "version": "1.0",
+  "description": "EasyChartX 配色方案设计器 - 预设配色方案",
+  "author": "简仪科技 (JYTEK)",
+  "lastUpdated": "2025-01-05",
+  "colorSchemes": [
+    {
+      "name": "Tableau标准",
+      "description": "Matplotlib Tableau标准10色，商业图表首选配色方案",
+      "colorHexValues": [
+        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+        "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+      ],
+      "category": "Standard",
+      "isRecommended": true
+    },
+    {
+      "name": "D3标准",
+      "description": "D3.js标准配色，Web数据可视化行业标准",
+      "colorHexValues": [
+        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+        "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+      ],
+      "category": "Standard",
+      "isRecommended": false
+    },
+    {
+      "name": "D3扩展20色",
+      "description": "D3.js扩展版，主色+浅色搭配，支持更多数据系列",
+      "colorHexValues": [
+        "#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c",
+        "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5",
+        "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f",
+        "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"
+      ],
+      "category": "Standard",
+      "isRecommended": false
+    },
+    {
+      "name": "红蓝经典",
+      "description": "最常用的红蓝配色，适合1-2根线的应用场景",
+      "colorHexValues": [
+        "#FF0000", "#0000FF", "#FF6600", "#0066FF",
+        "#FF3333", "#3333FF", "#FF9900", "#0099FF"
+      ],
+      "category": "Classic",
+      "isRecommended": false
+    },
+    {
+      "name": "专业深色",
+      "description": "现代专业配色，适合长时间观看",
+      "colorHexValues": [
+        "#E74C3C", "#3498DB", "#2ECC71", "#F39C12",
+        "#9B59B6", "#1ABC9C", "#E67E22", "#34495E"
+      ],
+      "category": "Classic",
+      "isRecommended": false
+    },
+    {
+      "name": "无障碍友好",
+      "description": "考虑色盲用户的友好配色方案",
+      "colorHexValues": [
+        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728",
+        "#9467bd", "#8c564b", "#e377c2", "#7f7f7f"
+      ],
+      "category": "Special",
+      "isRecommended": false
+    },
+    {
+      "name": "K 风格",
+      "description": "高对比度配色，易于区分",
+      "colorHexValues": [
+        "#FFD700", "#00CED1", "#FF6347", "#98FB98",
+        "#DDA0DD", "#F0E68C", "#87CEEB", "#F4A460"
+      ],
+      "category": "Special",
+      "isRecommended": false
+    },
+    {
+      "name": "T 风格",
+      "description": "鲜艳明亮配色，适合暗背景",
+      "colorHexValues": [
+        "#FFFF00", "#00FFFF", "#FF00FF", "#00FF00",
+        "#FF8000", "#8080FF", "#FF80FF", "#80FF80"
+      ],
+      "category": "Special",
+      "isRecommended": false
+    },
+    {
+      "name": "R 风格",
+      "description": "现代化配色方案，平衡专业性和美观性",
+      "colorHexValues": [
+        "#00D4FF", "#FF4081", "#4CAF50", "#FF9800",
+        "#9C27B0", "#FFEB3B", "#E91E63", "#2196F3"
+      ],
+      "category": "Special",
+      "isRecommended": false
+    },
+    {
+      "name": "N 风格",
+      "description": "纯色系配色，高饱和度",
+      "colorHexValues": [
+        "#FF0000", "#00FF00", "#0000FF", "#FFFF00",
+        "#FF00FF", "#00FFFF", "#FF8000", "#8000FF"
+      ],
+      "category": "Special",
+      "isRecommended": false
+    },
+    {
+      "name": "M 风格",
+      "description": "科学计算领域广泛使用的配色",
+      "colorHexValues": [
+        "#0072BD", "#D95319", "#EDB120", "#7E2F8E",
+        "#77AC30", "#4DBEEE", "#A2142F", "#FF6600"
+      ],
+      "category": "Special",
+      "isRecommended": false
+    },
+    {
+      "name": "自定义配色",
+      "description": "现代渐变风格，美观且专业",
+      "colorHexValues": [
+        "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4",
+        "#FFEAA7", "#DDA0DD", "#74B9FF", "#FD79A8"
+      ],
+      "category": "Custom",
+      "isRecommended": false
+    }
+  ]
+}
