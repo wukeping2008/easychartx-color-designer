@@ -531,17 +531,6 @@
                         </div>
                     </button>
 
-                    <button class="scheme-button" data-scheme="tableau" title="基于D3 Category10，商业图表广泛使用">
-                        Tableau标准 (基于D3 Category10)
-                        <div class="scheme-description">基于D3 Category10，商业图表广泛使用</div>
-                        <div class="color-preview">
-                            <div class="color-dot" style="background: #1f77b4;"></div>
-                            <div class="color-dot" style="background: #ff7f0e;"></div>
-                            <div class="color-dot" style="background: #2ca02c;"></div>
-                            <div class="color-dot" style="background: #d62728;"></div>
-                            <div class="color-dot" style="background: #9467bd;"></div>
-                        </div>
-                    </button>
 
                     <button class="scheme-button" data-scheme="d3category20" title="D3.js扩展配色，前10色为主色，后10色为对应浅色变体，适合大量数据系列">
                         D3扩展20色
@@ -859,12 +848,6 @@
                 description: "D3.js标准配色，基于色彩科学设计，在Lab色域中具有最佳区分度",
                 category: "standard",
                 recommended: true
-            },
-            tableau: {
-                name: "Tableau标准",
-                colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
-                description: "基于D3 Category10，商业图表广泛使用",
-                category: "standard"
             },
             d3category20: {
                 name: "D3扩展20色",
@@ -1748,9 +1731,47 @@
                 code += `{\n`;
                 
                 // 设置图表背景和样式
+                // 获取当前背景配置
+                const backgroundColor = getBackgroundColor();
+                let bgColorCode = 'Color.Black';
+                let textColorCode = 'Color.White';
+                let gridColorCode = 'Color.Gray';
+                
+                // 根据背景配置生成对应的C#颜色代码
+                switch (backgroundColor) {
+                    case '#ffffff':
+                        bgColorCode = 'Color.White';
+                        textColorCode = 'Color.Black';
+                        gridColorCode = 'Color.LightGray';
+                        break;
+                    case '#000000':
+                        bgColorCode = 'Color.Black';
+                        textColorCode = 'Color.White';
+                        gridColorCode = 'Color.Gray';
+                        break;
+                    case '#2c3e50':
+                        bgColorCode = 'Color.FromArgb(44, 62, 80)';
+                        textColorCode = 'Color.White';
+                        gridColorCode = 'Color.Gray';
+                        break;
+                    default:
+                        // 自定义颜色
+                        const hex = backgroundColor.replace('#', '');
+                        const r = parseInt(hex.substr(0, 2), 16);
+                        const g = parseInt(hex.substr(2, 2), 16);
+                        const b = parseInt(hex.substr(4, 2), 16);
+                        bgColorCode = `Color.FromArgb(${r}, ${g}, ${b})`;
+                        
+                        // 根据亮度计算文字颜色
+                        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                        textColorCode = brightness > 128 ? 'Color.Black' : 'Color.White';
+                        gridColorCode = brightness > 128 ? 'Color.LightGray' : 'Color.Gray';
+                        break;
+                }
+                
                 code += `    // 设置图表背景和样式\n`;
-                code += `    easyChartX1.BackColor = Color.Black;\n`;
-                code += `    easyChartX1.ChartAreaBackColor = Color.Black;\n\n`;
+                code += `    easyChartX1.BackColor = ${bgColorCode};\n`;
+                code += `    easyChartX1.ChartAreaBackColor = ${bgColorCode};\n\n`;
                 
                 // 设置坐标轴和网格线
                 code += `    // 设置坐标轴和网格线\n`;
