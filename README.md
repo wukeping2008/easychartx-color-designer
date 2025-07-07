@@ -15,7 +15,6 @@ The EasyChartX Waveform Color Scheme Designer is a professional color scheme too
 
 ### 🏆 Standard Color Schemes
 - **D3 Category10** ⭐: D3.js standard colors, scientifically designed with optimal distinction in Lab color space
-- **Tableau Standard**: Based on D3 Category10, widely used in commercial charts
 - **D3 Extended 20**: D3.js extended palette with 10 main colors + 10 corresponding light variants, suitable for large data series
 
 ### 📊 Classic Color Schemes
@@ -299,6 +298,27 @@ A: Channel count should equal the number of data series you need to display. If 
 
 ## 📝 Changelog
 
+### v1.2 (July 7, 2025)
+**🎨 Color Scheme Optimization & Export Enhancement**
+
+#### Color Scheme Improvements
+- **Removed Duplicate Scheme**: Eliminated redundant "Tableau Standard (based on D3 Category10)" color scheme
+- **Enhanced Scientific Focus**: Retained authoritative "D3 Category10 ⭐" as the primary scientific color standard
+- **Interface Simplification**: Streamlined color scheme selection to avoid user confusion
+- **Comparison Mode Update**: Updated comparison mode dropdown menu to remove tableau option
+
+#### C# Export Function Enhancement
+- **Background Configuration Fix**: C# export now correctly reflects user-selected background colors
+- **Dynamic Color Generation**: Supports white, black, dark gray, and custom background colors
+- **Intelligent Color Mapping**: Automatically generates appropriate text and grid colors based on background brightness
+- **Code Quality Improvement**: Enhanced exported C# code with proper color configuration logic
+
+#### Technical Optimizations
+- Improved color scheme data structure consistency
+- Enhanced user interface clarity and usability
+- Maintained full backward compatibility
+- Verified functionality through comprehensive browser testing
+
 ### v1.1 (July 5, 2025)
 **🔬 Color Science Optimization Update**
 
@@ -348,8 +368,8 @@ If you encounter issues or have suggestions for improvement, please contact the 
 
 ---
 
-**Version**: v1.1  
-**Update Date**: July 5, 2025  
+**Version**: v1.2  
+**Update Date**: July 7, 2025  
 **Development Team**: JYTEK SeeSharp Toolkit Team  
 **Compatible Product**: EasyChartX Control
 
